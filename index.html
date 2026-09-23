@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <style>
+        body { background-color: #121212; color: #fff; font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .header { background: linear-gradient(to right, #ff4e00, #e91e63); padding: 20px; text-align: center; font-size: 20px; font-weight: bold; }
+        .card { background: #222; margin: 15px; padding: 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .balance { color: #f39c12; font-size: 24px; font-weight: bold; }
+        .btn-group { display: flex; justify-content: space-around; margin: 20px 0; }
+        .btn { background: #333; color: #fff; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-size: 14px; }
+        .go-btn { display: block; width: 60px; height: 60px; background: #f39c12; color: #000; border-radius: 50%; text-align: center; line-height: 60px; font-weight: bold; margin: 20px auto; text-decoration: none; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">Homepage</div>
+    
+    <div class="card">
+        <div>
+            <h3>User Balance</h3>
+            <div class="balance">$<span id="balance">0.00</span></div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <a href="#" class="btn">Recharge</a>
+        <a href="#" class="btn">Withdraw</a>
+        <a href="#" class="btn">Invite</a>
+    </div>
+
+    <a href="grab.html" class="go-btn">GO</a>
+
+    <script>
+        fetch('/api/user')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('balance').innerText = data.balance.toFixed(2);
+            });
+    </script>
+</body>
+</html>

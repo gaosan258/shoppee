@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grab Order</title>
+    <style>
+        body { background-color: #1a1a1a; color: #fff; font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .box { background: #2a2a2a; padding: 30px; border-radius: 12px; margin: 20px auto; max-width: 400px; }
+        .btn-grab { background: #d4af37; color: #000; font-size: 18px; font-weight: bold; padding: 15px 30px; border: none; border-radius: 25px; cursor: pointer; }
+        .result { margin-top: 20px; font-size: 16px; color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <h2>Random Lucky Order</h2>
+    
+    <div class="box">
+        <button class="btn-grab" onclick="grabOrder()">Start Grabbing Orders</button>
+        <div class="result" id="result-text"></div>
+    </div>
+
+    <a href="index.html" style="color: #aaa; text-decoration: none;">← Back to Home</a>
+
+    <script>
+        function grabOrder() {
+            fetch('/api/grab', { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('result-text').innerText = 
+                            `Order Successful! Commission Earned: $${data.commission}`;
+                    } else {
+                        document.getElementById('result-text').innerText = data.message;
+                    }
+                });
+        }
+    </script>
+</body>
+</html>
