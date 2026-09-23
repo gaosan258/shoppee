@@ -3,189 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: #0d0d0d; color: #ffffff; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 70px; }
-        
-        /* Top Navigation Header */
-        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background-color: #121212; font-size: 18px; font-weight: 500; }
-        .lang-select { font-size: 14px; color: #ccc; cursor: pointer; }
-        
-        /* Banner Image Box */
-        .banner-container { width: 100%; height: 180px; background-color: #222; overflow: hidden; position: relative; }
-        .banner-img { width: 100%; height: 100%; object-fit: cover; }
-        
-        /* User Profile & Balance Card */
-        .profile-card { background: linear-gradient(180deg, #2a2a2a 0%, #1c1c1c 100%); margin: 15px; padding: 16px; border-radius: 12px; border: 1px solid #333; }
-        .profile-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .user-info { display: flex; align-items: center; gap: 12px; }
-        .avatar { width: 45px; height: 45px; background-color: #d8c397; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #121212; }
-        .username { font-size: 16px; font-weight: 600; color: #e5e5e5; }
-        .balance-box { text-align: right; }
-        .balance-num { font-size: 22px; font-weight: bold; color: #d4af37; }
-        .balance-label { font-size: 12px; color: #888; }
-        
-        .profile-bottom { display: flex; justify-content: space-around; border-top: 1px solid #2e2e2e; padding-top: 12px; text-align: center; }
-        .stat-item { flex: 1; }
-        .stat-item:first-child { border-right: 1px solid #2e2e2e; }
-        .stat-num { font-size: 16px; font-weight: 600; color: #e5e5e5; }
-        .stat-label { font-size: 11px; color: #d4af37; margin-top: 2px; }
-        
-        /* Announcement Bar */
-        .notice-bar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background-color: #141414; font-size: 12px; color: #aaa; margin-bottom: 15px; }
-        .notice-icon { font-size: 14px; }
-        
-        /* Quick Action Grid Icons */
-        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 15px 20px 15px; text-align: center; }
-        .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #eee; text-decoration: none; }
-        .action-icon { width: 50px; height: 50px; background-color: #222; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-        
-        /* Latest Recharge List */
-        .section-title { font-size: 16px; font-weight: bold; margin: 0 15px 10px 15px; color: #fff; }
-        .list-container { margin: 0 15px; display: flex; flex-direction: column; gap: 10px; }
-        .list-card { background-color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .list-left { display: flex; align-items: center; gap: 12px; }
-        .user-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #444; }
-        .user-text { font-size: 13px; color: #eee; }
-        .user-date { font-size: 11px; color: #666; margin-top: 2px; }
-        .amount { color: #d4af37; font-weight: bold; font-size: 14px; }
-        
-        /* Bottom Navigation Bar */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background-color: #121212; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; border-top: 1px solid #222; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: #888; text-decoration: none; }
-        .nav-item.active { color: #d4af37; }
-        .nav-icon { font-size: 18px; margin-bottom: 2px; }
-        
-        /* Center Floating GO Button */
-        .go-button { width: 55px; height: 55px; background: linear-gradient(135deg, #ffb700, #ff8800); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; color: #000; text-decoration: none; margin-top: -20px; box-shadow: 0 0 12px rgba(255, 136, 0, 0.6); border: 2px solid #121212; }
-    </style>
+    <title>Home - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-
-    <!-- Header Bar -->
-    <div class="top-nav">
-        <div style="width: 50px;"></div>
-        <div>homepage</div>
-        <div class="lang-select">🇺🇸 English ∨</div>
-    </div>
-
-    <!-- Banner -->
-    <div class="banner-container">
-        <img class="banner-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Central Retail">
-    </div>
-
-    <!-- Balance Profile Card -->
-    <div class="profile-card">
-        <div class="profile-top">
-            <div class="user-info">
-                <div class="avatar">👤</div>
-                <div class="username" id="homeUsername">Selina</div>
-            </div>
-            <div class="balance-box">
-                <div class="balance-num">$<span id="balance">0.00</span></div>
-                <div class="balance-label">my balance</div>
-            </div>
+<body class="bg-gray-950 text-white font-sans flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-md bg-gray-900 min-h-screen shadow-2xl flex flex-col justify-between pb-16">
+        
+        <!-- Header Section with Language Selector -->
+        <div class="p-4 bg-gray-900 border-b border-gray-800 flex justify-between items-center">
+            <span class="text-lg font-bold" data-i18n="home">Home</span>
+            <select id="langSelect" onchange="changeLanguage(this.value)" class="text-sm bg-gray-800 border border-gray-700 px-3 py-1.5 rounded-lg text-gray-300 focus:outline-none">
+                <option value="en">English</option>
+                <option value="my">မြန်မာ</option>
+                <option value="ar">العربية</option>
+                <option value="zh">中文</option>
+            </select>
         </div>
-        <div class="profile-bottom">
-            <div class="stat-item">
-                <div class="stat-num" id="missionBenefits">0</div>
-                <div class="stat-label">Mission benefits( $ )</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-num" id="todayEarnings">0</div>
-                <div class="stat-label">Earnings Today( $ )</div>
-            </div>
-        </div>
-    </div>
 
-    <!-- Notice -->
-    <div class="notice-bar">
-        <span class="notice-icon">📜</span>
-        <span>Welcome, ladies and gentlemen...</span>
-    </div>
-
-    <!-- Action Icons -->
-    <div class="action-grid">
-        <a href="deposit.html" class="action-item">
-            <div class="action-icon">📦</div>
-            <span>Recharge</span>
-        </a>
-        <a href="deposit.html" class="action-item">
-            <div class="action-icon">👛</div>
-            <span>Withdraw</span>
-        </a>
-        <a href="profile.html" class="action-item">
-            <div class="action-icon">👥</div>
-            <span>Invite</span>
-        </a>
-    </div>
-
-    <!-- Latest Recharge List -->
-    <div class="section-title">Latest Recharge</div>
-    <div class="list-container">
-        <div class="list-card">
-            <div class="list-left">
-                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg'); background-size: cover;"></div>
-                <div>
-                    <div class="user-text">Congratulations******5505</div>
-                    <div class="user-date">2026/09/23</div>
+        <!-- Balance Card -->
+        <div class="p-4">
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-800 rounded-2xl p-5 shadow-inner">
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl">👤</div>
+                    <div>
+                        <div class="text-sm text-gray-400">Yahya Ali</div>
+                        <div class="text-xl font-bold text-amber-400">$0.24</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-800 text-center text-sm">
+                    <div>
+                        <div class="text-gray-400">0</div>
+                        <div class="text-xs text-gray-500" data-i18n="task_earnings">Task Earnings ($)</div>
+                    </div>
+                    <div>
+                        <div class="text-gray-400">0</div>
+                        <div class="text-xs text-gray-500" data-i18n="today_profit">Today Profit ($)</div>
+                    </div>
                 </div>
             </div>
-            <div class="amount">$4926</div>
         </div>
-        <div class="list-card">
-            <div class="list-left">
-                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/44.jpg'); background-size: cover;"></div>
-                <div>
-                    <div class="user-text">Congratulations******5292</div>
-                    <div class="user-date">2026/09/23</div>
-                </div>
-            </div>
-            <div class="amount">$6944</div>
+
+        <!-- Action Grid (Deposit, Withdraw, Invite) -->
+        <div class="px-4 grid grid-cols-3 gap-3 text-center">
+            <a href="deposit.html" class="bg-gray-900 border border-gray-800 hover:bg-gray-800 p-4 rounded-xl flex flex-col items-center transition">
+                <span class="text-2xl mb-1">📦</span>
+                <span class="text-sm" data-i18n="deposit">Deposit</span>
+            </a>
+            <a href="withdraw.html" class="bg-gray-900 border border-gray-800 hover:bg-gray-800 p-4 rounded-xl flex flex-col items-center transition">
+                <span class="text-2xl mb-1">💳</span>
+                <span class="text-sm" data-i18n="withdraw">Withdraw</span>
+            </a>
+            <a href="#" class="bg-gray-900 border border-gray-800 hover:bg-gray-800 p-4 rounded-xl flex flex-col items-center transition">
+                <span class="text-2xl mb-1">👥</span>
+                <span class="text-sm" data-i18n="invite">Invite</span>
+            </a>
         </div>
-        <div class="list-card">
-            <div class="list-left">
-                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/85.jpg'); background-size: cover;"></div>
-                <div>
-                    <div class="user-text">Congratulations******3344</div>
-                    <div class="user-date">2026/09/23</div>
-                </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="fixed bottom-0 w-full max-w-md bg-gray-900 border-t border-gray-800 flex justify-around py-3 text-xs text-gray-400">
+            <a href="index.html" class="flex flex-col items-center text-amber-400">🏠<span data-i18n="home">Home</span></a>
+            <a href="grab.html" class="flex flex-col items-center">📋<span data-i18n="orders">Orders</span></a>
+            <div class="relative -top-4">
+                <div class="w-14 h-14 bg-amber-400 rounded-full flex items-center justify-center text-black font-bold text-lg shadow-lg border-4 border-gray-900">GO</div>
             </div>
-            <div class="amount">$14273</div>
+            <a href="chat.html" class="flex flex-col items-center">💬<span data-i18n="service">Service</span></a>
+            <a href="profile.html" class="flex flex-col items-center">👤<span data-i18n="profile">Profile</span></a>
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item active">
-            <span class="nav-icon">🏠</span>
-            <span>homepage</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">📋</span>
-            <span>Order</span>
-        </a>
-        <a href="grab.html" class="go-button">GO</a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon">💬</span>
-            <span>Support</span>
-        </a>
-        <a href="profile.html" class="nav-item">
-            <span class="nav-icon">👤</span>
-            <span>My</span>
-        </a>
-    </div>
-
+    <!-- Multi-language Script Support -->
     <script>
-        fetch('/api/user')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('homeUsername').innerText = data.username;
-                document.getElementById('balance').innerText = data.balance.toFixed(2);
-                document.getElementById('missionBenefits').innerText = data.completedTasks;
-                document.getElementById('todayEarnings').innerText = data.todayEarnings.toFixed(2);
+        const translations = {
+            en: { home: "Home", task_earnings: "Task Earnings ($)", today_profit: "Today Profit ($)", deposit: "Deposit", withdraw: "Withdraw", invite: "Invite", orders: "Orders", service: "Service", profile: "Profile" },
+            my: { home: "ပင်မစာမျက်နှာ", task_earnings: "တာဝန်မှရငွေ ($)", today_profit: "ယနေ့အမြတ် ($)", deposit: "ငွေသွင်းရန်", withdraw: "ငွေထုတ်ရန်", invite: "ဖိတ်ကြားရန်", orders: "မှာယူမှုများ", service: "ဝန်ဆောင်မှု", profile: "အကောင့်" },
+            ar: { home: "الصفحة الرئيسية", task_earnings: "عوائد المهمة ($)", today_profit: "الأرباح اليوم ($)", deposit: "إداع", withdraw: "سحب", invite: "دعوة", orders: "الطلبات", service: "الخدمة", profile: "حسابي" },
+            zh: { home: "首页", task_earnings: "任务收益 ($)", today_profit: "今日利润 ($)", deposit: "充值", withdraw: "提现", invite: "邀请", orders: "订单", service: "客服", profile: "我的" }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
             });
+            // Handle RTL/LTR direction support
+            if(lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+        }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'en';
+            document.getElementById('langSelect').value = savedLang;
+            changeLanguage(savedLang);
+        }
     </script>
 </body>
 </html>

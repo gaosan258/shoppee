@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Withdrawal</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-950 text-white font-sans flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-md bg-gray-900 min-h-screen shadow-2xl p-4 flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-3">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl mr-3">‹</a>
+                    <span class="font-bold">Withdrawal</span>
+                </div>
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded text-gray-300">
+                    <option value="en">English</option>
+                    <option value="my">မြန်မာ</option>
+                    <option value="ar">العربية</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+
+            <!-- Amount Card -->
+            <div class="bg-gray-800 border border-gray-700 rounded-2xl p-4 mb-4">
+                <div class="text-sm text-gray-400 mb-2">Withdrawal Amount</div>
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-amber-400 text-xs border border-amber-400 px-3 py-1 rounded-full">USDT</span>
+                    <span class="text-2xl font-bold">$ 32.24</span>
+                </div>
+                <div class="text-xs text-gray-400">Balance: $0.24 | Withdraw All</div>
+            </div>
+
+            <!-- Bank / Wallet Details -->
+            <div class="bg-gray-800 border border-gray-700 rounded-2xl p-4 space-y-4 text-sm">
+                <div class="flex justify-between border-b border-gray-700 pb-2">
+                    <span class="text-gray-400">Bank Name</span>
+                    <span>Muscat Bank</span>
+                </div>
+                <div class="flex justify-between border-b border-gray-700 pb-2">
+                    <span class="text-gray-400">Real Name</span>
+                    <span>Yahya Al-Omrani</span>
+                </div>
+                <div class="flex justify-between border-b border-gray-700 pb-2">
+                    <span class="text-gray-400">Card Number</span>
+                    <span>0211062****15</span>
+                </div>
+                <div>
+                    <input type="password" placeholder="Fund Password" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+                </div>
+            </div>
+            <div class="text-red-500 text-xs mt-2">* Please double check your payment details carefully</div>
+        </div>
+
+        <button class="w-full bg-slate-700 text-white font-bold p-4 rounded-xl shadow-lg mt-6">
+            Instant Withdrawal
+        </button>
+    </div>
+    <script>
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            if(lang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
+            else document.documentElement.setAttribute('dir', 'ltr');
+        }
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'en';
+            document.getElementById('langSelect').value = savedLang;
+            if(savedLang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
+        }
+    </script>
+</body>
+</html>

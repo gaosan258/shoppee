@@ -3,53 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recharge Deposit</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: #0d0d0d; color: #fff; padding: 20px; max-width: 480px; margin: 0 auto; text-align: center; }
-        .header { font-size: 20px; font-weight: bold; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 15px; }
-        .card { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; }
-        label { font-size: 14px; color: #aaa; display: block; margin-bottom: 12px; }
-        input { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #444; background: #222; color: #fff; font-size: 18px; text-align: center; outline: none; margin-bottom: 20px; }
-        input:focus { border-color: #d4af37; }
-        button { width: 100%; background: linear-gradient(135deg, #ffb700, #ff8800); color: #000; font-weight: bold; padding: 14px; border: none; border-radius: 25px; font-size: 16px; cursor: pointer; }
-        .back-btn { color: #888; text-decoration: none; display: inline-block; margin-top: 25px; font-size: 14px; }
-    </style>
+    <title>Deposit</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
+<body class="bg-gray-950 text-white font-sans flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-md bg-gray-900 min-h-screen shadow-2xl p-4 flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-center mb-6 border-b border-gray-800 pb-3">
+                <a href="index.html" class="text-xl">‹</a>
+                <span class="font-bold">Deposit</span>
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="text-xs bg-gray-800 border border-gray-700 px-2 py-1 rounded text-gray-300">
+                    <option value="en">English</option>
+                    <option value="my">မြန်မာ</option>
+                    <option value="ar">العربية</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
 
-    <div class="header">Recharge Deposit</div>
+            <div class="mb-4">
+                <label class="block text-sm text-gray-400 mb-2">Deposit Amount</label>
+                <div class="text-amber-400 text-xl font-bold mb-2">$</div>
+                <input type="number" placeholder="Please enter purchase amount" class="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-white focus:outline-none focus:border-amber-400">
+            </div>
 
-    <div class="card">
-        <label for="depositAmount">Enter Deposit Amount ($)</label>
-        <input type="number" id="depositAmount" placeholder="0.00" min="1">
-        <button onclick="submitDeposit()">Confirm Deposit</button>
+            <!-- Amount Preset Buttons -->
+            <div class="grid grid-cols-4 gap-2 mb-6">
+                <button class="bg-gray-800 border border-amber-400 p-2 rounded-lg text-sm text-center">100.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">300.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">500.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">1000.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">2000.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">5000.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">10000.00</button>
+                <button class="bg-gray-800 border border-gray-700 p-2 rounded-lg text-sm text-center">30000.00</button>
+            </div>
+
+            <div class="text-xs text-gray-400 space-y-2 bg-gray-800/50 p-3 rounded-xl border border-gray-800">
+                <p>1. The paid amount must match the order amount exactly, otherwise automatic crediting will fail.</p>
+                <p>2. If your deposit or withdrawal does not arrive, contact support for assistance.</p>
+            </div>
+        </div>
+
+        <button class="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-black font-bold p-4 rounded-xl shadow-lg mt-6">
+            Confirm Submission
+        </button>
     </div>
-
-    <a href="index.html" class="back-btn">← Back to Homepage</a>
-
     <script>
-        function submitDeposit() {
-            const amount = document.getElementById('depositAmount').value;
-            if(!amount || amount <= 0) {
-                alert('Please enter a valid amount!');
-                return;
-            }
-
-            fetch('/api/deposit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ amount: amount })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.success) {
-                    alert('Deposit Successful! New Balance: $' + data.newBalance.toFixed(2));
-                    window.location.href = 'index.html';
-                } else {
-                    alert('Deposit Failed!');
-                }
-            });
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            if(lang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
+            else document.documentElement.setAttribute('dir', 'ltr');
+        }
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'en';
+            document.getElementById('langSelect').value = savedLang;
+            if(savedLang === 'ar') document.documentElement.setAttribute('dir', 'rtl');
         }
     </script>
 </body>

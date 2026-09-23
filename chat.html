@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Service Center</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-950 text-white font-sans flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-md bg-gray-900 min-h-screen shadow-2xl flex flex-col justify-between">
+        
+        <!-- Header -->
+        <div class="bg-emerald-700 p-4 flex items-center justify-between">
+            <span class="font-bold">Customer Service Center</span>
+            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-black">🤖</div>
+        </div>
+
+        <!-- Chat Messages Area -->
+        <div class="p-4 flex-1 space-y-4 overflow-y-auto text-sm">
+            <!-- Bot Message -->
+            <div class="bg-gray-200 text-black p-3 rounded-xl rounded-tr-none max-w-[85%] space-y-2">
+                <p>Dear Customer,<br>Welcome to the Customer Service Center<br>Please let us know if you have any questions or concerns</p>
+                <div class="flex space-x-2 space-x-reverse pt-2">
+                    <button class="bg-white text-blue-600 border border-blue-500 px-3 py-1 rounded-full text-xs font-semibold">USDT</button>
+                    <button class="bg-white text-blue-600 border border-blue-500 px-3 py-1 rounded-full text-xs font-semibold">C2C</button>
+                </div>
+            </div>
+
+            <!-- User Message -->
+            <div class="flex justify-end">
+                <div class="bg-emerald-600 text-white p-3 rounded-xl rounded-tl-none">USDT</div>
+            </div>
+
+            <!-- Bot Response -->
+            <div class="bg-gray-200 text-black p-3 rounded-xl rounded-tr-none max-w-[85%]">
+                <p class="break-all font-mono text-xs">TL5m2sZRiySCTvAaWPKBRKzzEt2CBU5EvN</p>
+            </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="p-3 bg-gray-900 border-t border-gray-800 flex items-center space-x-2 space-x-reverse">
+            <input type="text" placeholder="اكتب رسالة..." class="flex-1 bg-gray-800 border border-gray-700 rounded-xl p-3 text-white text-sm focus:outline-none">
+            <button class="bg-emerald-600 p-3 rounded-xl text-white font-bold">➤</button>
+        </div>
+    </div>
+</body>
+</html>

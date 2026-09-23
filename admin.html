@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Account Control</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #121212; color: #fff; padding: 20px; }
+        h1, h2 { color: #ffb700; margin-bottom: 15px; text-align: center; }
+        
+        .card { background: #1e1e1e; padding: 20px; border-radius: 8px; max-width: 900px; margin: 0 auto 30px auto; }
+        .form-group { margin-bottom: 15px; display: inline-block; margin-right: 10px; }
+        label { display: block; margin-bottom: 5px; color: #aaa; font-size: 14px; }
+        input, select { padding: 8px 12px; background: #2a2a2a; border: 1px solid #444; color: #fff; border-radius: 4px; }
+        button { padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-create { background: #ffb700; color: #000; }
+        .btn-save { background: #28a745; color: white; }
+        .btn-delete { background: #dc3545; color: white; }
+
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; background: #1e1e1e; border-radius: 8px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #333; }
+        th { background: #2a2a2a; color: #ffb700; }
+        td input, td select { width: 100px; }
+    </style>
+</head>
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <!-- Create Account Form -->
+    <div class="card">
+        <h2>အကောင့်အသစ် ဖန်တီးရန် (Create Account)</h2>
+        <form id="createAccountForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="new_username" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="new_password" required>
+            </div>
+            <div class="form-group">
+                <label>Role</label>
+                <select id="new_role">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Initial Balance ($)</label>
+                <input type="number" id="new_balance" value="0.00" step="0.01">
+            </div>
+            <button type="submit" class="btn-create">Create Account</button>
+        </form>
+    </div>
+
+    <!-- User Management Table -->
+    <div class="card">
+        <h2>အကောင့်များ ထိန်းချုပ်ရန် (Manage Accounts)</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Balance ($)</th>
+                        <th>Tasks</th>
+                        <th>Today Earn ($)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Data will load here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Load All Accounts
+        function loadUsers() {
+            fetch('/api/admin/users')
+                .then(res => {
+                    if (res.status === 403) {
+                        alert("Access denied! Please login as Admin.");
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (data && data.success) {
+                        const tbody = document.getElementById('userTableBody');
+                        tbody.innerHTML = '';
+                        data.users.forEach(user => {
+                            tbody.innerHTML += `
+                                <tr>
+                                    <td>${user.id}</td>
+                                    <td><b>${user.username}</b></td>
+                                    <td>
+                                        <select id="role_${user.id}">
+                                            <option value="user" ${user.role === 'user' ? 'selected' : ''}>User</option>
+                                            <option value="admin" ${user.role === 'admin' ? 'selected' : ''}>Admin</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="number" step="0.01" id="bal_${user.id}" value="${user.balance}"></td>
+                                    <td><input type="number" id="task_${user.id}" value="${user.completed_tasks}"></td>
+                                    <td><input type="number" step="0.01" id="earn_${user.id}" value="${user.today_earnings}"></td>
+                                    <td>
+                                        <button class="btn-save" onclick="updateUser(${user.id})">Save</button>
+                                        <button class="btn-delete" onclick="deleteUser(${user.id})">Delete</button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    }
+                });
+        }
+
+        // Create New Account
+        document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('new_username').value;
+            const password = document.getElementById('new_password').value;
+            const role = document.getElementById('new_role').value;
+            const balance = document.getElementById('new_balance').value;
+
+            fetch('/api/admin/create-account', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password, role, balance })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                if (data.success) {
+                    document.getElementById('createAccountForm').reset();
+                    loadUsers();
+                }
+            });
+        });
+
+        // Update User Account
+        function updateUser(id) {
+            const role = document.getElementById(`role_${id}`).value;
+            const balance = document.getElementById(`bal_${id}`).value;
+            const completed_tasks = document.getElementById(`task_${id}`).value;
+            const today_earnings = document.getElementById(`earn_${id}`).value;
+
+            fetch('/api/admin/update-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, role, balance, completed_tasks, today_earnings })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+                loadUsers();
+            });
+        }
+
+        // Delete Account
+        function deleteUser(id) {
+            if (confirm('Are you sure you want to delete this account?')) {
+                fetch('/api/admin/delete-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    loadUsers();
+                });
+            }
+        }
+
+        loadUsers();
+    </script>
+</body>
+</html>
