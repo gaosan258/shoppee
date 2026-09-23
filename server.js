@@ -1,39 +1,50 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname)));
 
-// Mock Database
-let userData = {
-    balance: 100.00,
+// Mock User Data Strategy
+let user = {
+    username: "Selina",
+    balance: 0.00,
+    completedTasks: 0,
     todayEarnings: 0.00
 };
 
-// User Data API
+// API: User Profile Details
 app.get('/api/user', (req, res) => {
-    res.json(userData);
+    res.json(user);
 });
 
-// Order Grab API
-app.post('/api/grab', (req, res) => {
-    if (userData.balance < 10) {
-        return res.json({ success: false, message: "လက်ကျန်ငွေ မလုံလောက်ပါ။ Recharge လုပ်ပါ။" });
+// API: Deposit Money
+app.post('/api/deposit', (req, res) => {
+    const { amount } = req.body;
+    const numAmount = parseFloat(amount);
+    if (!isNaN(numAmount) && numAmount > 0) {
+        user.balance += numAmount;
+        res.json({ success: true, newBalance: user.balance });
+    } else {
+        res.json({ success: false, message: "Invalid amount" });
     }
+});
 
-    let randomCommission = parseFloat((Math.random() * 4.5 + 0.5).toFixed(2));
-    userData.balance += randomCommission;
-    userData.todayEarnings += randomCommission;
-
+// API: Grab Task / Order
+app.post('/api/grab', (req, res) => {
+    const commission = parseFloat((Math.random() * 5 + 1).toFixed(2));
+    user.balance += commission;
+    user.todayEarnings += commission;
+    user.completedTasks += 1;
+    
     res.json({
         success: true,
-        commission: randomCommission,
-        newBalance: userData.balance
+        commission: commission,
+        newBalance: user.balance
     });
 });
 
-const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:3000`);
+    console.log(`Server is running on port ${PORT}`);
 });
