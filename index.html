@@ -3,75 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopee Mall - Task Platform</title>
+    <title>Homepage</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #18191a; color: #e4e6eb; max-width: 500px; margin: 0 auto; min-height: 100vh; border-left: 1px solid #333; border-right: 1px solid #333; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #0d0d0d; color: #ffffff; max-width: 480px; margin: 0 auto; min-height: 100vh; padding-bottom: 70px; }
         
-        /* Header Bar */
-        .header { background: linear-gradient(135deg, #ee4d2d, #ff7337); padding: 15px; text-align: center; color: white; font-weight: bold; font-size: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        /* Top Navigation Header */
+        .top-nav { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background-color: #121212; font-size: 18px; font-weight: 500; }
+        .lang-select { font-size: 14px; color: #ccc; cursor: pointer; }
         
-        /* Banner Section */
-        .banner { background: #242526; margin: 15px; padding: 20px; border-radius: 12px; text-align: center; border: 1px solid #3a3b3c; background: linear-gradient(to right, #2c3e50, #000000); }
-        .banner h2 { color: #f39c12; font-size: 20px; margin-bottom: 5px; }
-        .banner p { color: #b0b3b8; font-size: 13px; }
-
-        /* Balance Card */
-        .card { background: #242526; margin: 15px; padding: 20px; border-radius: 12px; border: 1px solid #3a3b3c; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .balance-title { font-size: 14px; color: #b0b3b8; text-transform: uppercase; letter-spacing: 0.5px; }
-        .balance-num { color: #2ecc71; font-size: 32px; font-weight: bold; margin: 10px 0; }
+        /* Banner Image Box */
+        .banner-container { width: 100%; height: 180px; background-color: #222; overflow: hidden; position: relative; }
+        .banner-img { width: 100%; height: 100%; object-fit: cover; }
         
-        /* Action Buttons */
-        .btn-group { display: flex; justify-content: space-between; gap: 10px; margin: 15px; }
-        .btn { flex: 1; background: #3a3b3c; color: #e4e6eb; text-align: center; padding: 12px 5px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; border: 1px solid #4e4f50; transition: 0.2s; }
-        .btn:hover { background: #ee4d2d; color: white; border-color: #ee4d2d; }
+        /* User Profile & Balance Card */
+        .profile-card { background: linear-gradient(180deg, #2a2a2a 0%, #1c1c1c 100%); margin: 15px; padding: 16px; border-radius: 12px; border: 1px solid #333; }
+        .profile-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 45px; height: 45px; background-color: #d8c397; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #121212; }
+        .username { font-size: 16px; font-weight: 600; color: #e5e5e5; }
+        .balance-box { text-align: right; }
+        .balance-num { font-size: 22px; font-weight: bold; color: #d4af37; }
+        .balance-label { font-size: 12px; color: #888; }
         
-        /* Go Grab Circle Button */
-        .go-section { text-align: center; margin: 30px 0; }
-        .go-btn { display: inline-flex; align-items: center; justify-content: center; width: 90px; height: 90px; background: linear-gradient(135deg, #ff9900, #ee4d2d); color: white; border-radius: 50%; font-weight: bold; font-size: 22px; text-decoration: none; box-shadow: 0 0 20px rgba(238, 77, 45, 0.5); animation: pulse 1.5s infinite; }
+        .profile-bottom { display: flex; justify-content: space-around; border-top: 1px solid #2e2e2e; padding-top: 12px; text-align: center; }
+        .stat-item { flex: 1; }
+        .stat-item:first-child { border-right: 1px solid #2e2e2e; }
+        .stat-num { font-size: 16px; font-weight: 600; color: #e5e5e5; }
+        .stat-label { font-size: 11px; color: #d4af37; margin-top: 2px; }
         
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(238, 77, 45, 0.7); }
-            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(238, 77, 45, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(238, 77, 45, 0); }
-        }
-
-        /* Live Notifications */
-        .live-section { background: #242526; margin: 15px; padding: 15px; border-radius: 12px; border: 1px solid #3a3b3c; }
-        .live-title { font-size: 14px; font-weight: bold; color: #f39c12; margin-bottom: 10px; border-bottom: 1px solid #3a3b3c; padding-bottom: 5px; }
-        .notice-item { font-size: 12px; color: #b0b3b8; padding: 5px 0; display: flex; justify-content: space-between; }
-        .notice-amount { color: #2ecc71; font-weight: bold; }
+        /* Announcement Bar */
+        .notice-bar { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background-color: #141414; font-size: 12px; color: #aaa; margin-bottom: 15px; }
+        .notice-icon { font-size: 14px; }
+        
+        /* Quick Action Grid Icons */
+        .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0 15px 20px 15px; text-align: center; }
+        .action-item { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #eee; cursor: pointer; }
+        .action-icon { width: 50px; height: 50px; background-color: #222; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+        
+        /* Latest Recharge List */
+        .section-title { font-size: 16px; font-weight: bold; margin: 0 15px 10px 15px; color: #fff; }
+        .list-container { margin: 0 15px; display: flex; flex-direction: column; gap: 10px; }
+        .list-card { background-color: #1a1a1a; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .list-left { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #444; }
+        .user-text { font-size: 13px; color: #eee; }
+        .user-date { font-size: 11px; color: #666; margin-top: 2px; }
+        .amount { color: #d4af37; font-weight: bold; font-size: 14px; }
+        
+        /* Bottom Navigation Bar */
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background-color: #121212; display: flex; justify-content: space-around; align-items: center; padding: 8px 0; border-top: 1px solid #222; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: #888; text-decoration: none; }
+        .nav-item.active { color: #d4af37; }
+        .nav-icon { font-size: 18px; margin-bottom: 2px; }
+        
+        /* Center Floating GO Button */
+        .go-button { width: 55px; height: 55px; background: linear-gradient(135deg, #ffb700, #ff8800); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 18px; color: #000; text-decoration: none; margin-top: -20px; box-shadow: 0 0 12px rgba(255, 136, 0, 0.6); border: 2px solid #121212; }
     </style>
 </head>
 <body>
 
-    <div class="header">🛍️ Shopee VIP Mall</div>
-
-    <div class="banner">
-        <h2>Order Matching System</h2>
-        <p>Complete daily tasks to earn high commissions!</p>
+    <!-- Header Bar -->
+    <div class="top-nav">
+        <div style="width: 50px;"></div>
+        <div>homepage</div>
+        <div class="lang-select">🇺🇸 English ∨</div>
     </div>
 
-    <div class="card">
-        <div class="balance-title">Available Balance</div>
-        <div class="balance-num">$<span id="balance">0.00</span></div>
+    <!-- Banner -->
+    <div class="banner-container">
+        <img class="banner-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" alt="Central Retail">
     </div>
 
-    <div class="btn-group">
-        <a href="#" class="btn">📥 Deposit</a>
-        <a href="#" class="btn">📤 Withdraw</a>
-        <a href="#" class="btn">👥 Invite</a>
+    <!-- Balance Profile Card -->
+    <div class="profile-card">
+        <div class="profile-top">
+            <div class="user-info">
+                <div class="avatar">👤</div>
+                <div class="username">Selina</div>
+            </div>
+            <div class="balance-box">
+                <div class="balance-num">$<span id="balance">0.00</span></div>
+                <div class="balance-label">my balance</div>
+            </div>
+        </div>
+        <div class="profile-bottom">
+            <div class="stat-item">
+                <div class="stat-num">0</div>
+                <div class="stat-label">Mission benefits( $ )</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">0</div>
+                <div class="stat-label">Earnings Today( $ )</div>
+            </div>
+        </div>
     </div>
 
-    <div class="go-section">
-        <a href="grab.html" class="go-btn">START</a>
+    <!-- Notice -->
+    <div class="notice-bar">
+        <span class="notice-icon">📜</span>
+        <span>Welcome, ladies and gentlemen...</span>
     </div>
 
-    <div class="live-section">
-        <div class="live-title">🔥 Recent Commission Earnings</div>
-        <div class="notice-item"><span>User ***8291</span> <span class="notice-amount">+$12.50</span></div>
-        <div class="notice-item"><span>User ***4012</span> <span class="notice-amount">+$45.20</span></div>
-        <div class="notice-item"><span>User ***9923</span> <span class="notice-amount">+$8.00</span></div>
+    <!-- Action Icons -->
+    <div class="action-grid">
+        <div class="action-item">
+            <div class="action-icon">📦</div>
+            <span>Recharge</span>
+        </div>
+        <div class="action-item">
+            <div class="action-icon">👛</div>
+            <span>Withdraw</span>
+        </div>
+        <div class="action-item">
+            <div class="action-icon">👥</div>
+            <span>Invite</span>
+        </div>
+    </div>
+
+    <!-- Latest Recharge List -->
+    <div class="section-title">Latest Recharge</div>
+    <div class="list-container">
+        <div class="list-card">
+            <div class="list-left">
+                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/32.jpg'); background-size: cover;"></div>
+                <div>
+                    <div class="user-text">Congratulations******5505</div>
+                    <div class="user-date">2026/09/23</div>
+                </div>
+            </div>
+            <div class="amount">$4926</div>
+        </div>
+        <div class="list-card">
+            <div class="list-left">
+                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/44.jpg'); background-size: cover;"></div>
+                <div>
+                    <div class="user-text">Congratulations******5292</div>
+                    <div class="user-date">2026/09/23</div>
+                </div>
+            </div>
+            <div class="amount">$6944</div>
+        </div>
+        <div class="list-card">
+            <div class="list-left">
+                <div class="user-avatar" style="background-image: url('https://randomuser.me/api/portraits/men/85.jpg'); background-size: cover;"></div>
+                <div>
+                    <div class="user-text">Congratulations******3344</div>
+                    <div class="user-date">2026/09/23</div>
+                </div>
+            </div>
+            <div class="amount">$14273</div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>homepage</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>Order</span>
+        </a>
+        <a href="grab.html" class="go-button">GO</a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Support</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>My</span>
+        </a>
     </div>
 
     <script>
